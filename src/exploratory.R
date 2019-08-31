@@ -1,8 +1,20 @@
 library(tidyverse)
 library(janitor)
+library(here)
 
 # Carga Base 2017
-latin_2017 <- readRDS("C:/Users/Usuario/Desktop/Latinobarometro/proyecto/data/internas/latin_2017.rds")
+latin_2017 <- readRDS("data/internas/latin_2017.rds") 
+
+df_latin <- latin_2017 %>% 
+  transmute( pais            = idenpa, 
+             region          = reg,
+             ciudad, tamciud, wt, edad, sexo,
+             educ1           = REEDUC.1,
+             educ2           = REEDUC.2,
+             preg_parlamento = P53N.F,
+             preg_jueces     = P53N.G,
+             dif_conflicto   = P21ST.F)
+
 
 # Tabla Idioma
 tabyl(latin_2017$S24.A)
@@ -12,7 +24,6 @@ tabyl(latin_2017$S9)
 
 # Tabla Raza
 tabyl(latin_2017$S10)
-
 
 # Que la mitad de los miembros del parlamento tengan que ser mujeres
 tabla1 <- latin_2017 %>%  
