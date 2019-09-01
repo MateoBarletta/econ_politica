@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 /data*
+plough_replication/*
+.DS_Store
+paula/data/WV6_Data_Stata_v20180912.dta
+
