@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+plough_replication/*
+.DS_Store
