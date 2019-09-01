@@ -11,6 +11,9 @@ iso <- readRDS("data/internas/iso.rds")
 # Carga Base Latinobarometro 2017
 latin_2017 <- readRDS("data/internas/latin_2017.rds") 
 
+# Carga Base Latinobarometro 2015
+latin_2015 <- readRDS("data/internas/latin_2015.rds") 
+
 # Carga Base Latinobarometro 2009
 latin_2009 <- readRDS("data/internas/latin_2009.rds") 
 
@@ -47,13 +50,29 @@ df_latin_2017 <- latin_2017 %>%
   transmute(countrycode     = as.character(idenpa), 
             region          = as.factor(reg),
             ciudad          = as.factor(ciudad), 
-            tamciud         = as.factor(tamciudad), 
-            wt, edad, sexo,
+            tamciud         = as.factor(tamciud), 
             educ1           = REEDUC.1,
             educ2           = REEDUC.2,
             preg_parlamento = P53N.F,
             preg_jueces     = P53N.G,
-            dif_conflicto   = P21ST.F) %>% 
+            dif_conflicto   = P21ST.F,
+            wt, edad, sexo) %>% 
+  mutate(countrycode = case_when(nchar(countrycode)==2 ~ str_c('0', countrycode),
+                                 T ~ countrycode)) %>% 
+  left_join(aux2, by='countrycode') %>% 
+  mutate(countrycode = as.factor(countrycode))
+
+# Joinea Latinobarometro 2015 con base del paper a nivel pais
+df_latin_2015 <- latin_2015 %>% 
+  transmute(countrycode     = as.character(idenpa), 
+            region          = as.factor(reg),
+            ciudad          = as.factor(ciudad), 
+            tamciud         = as.factor(tamciud), 
+            edad            = reedad,
+            educ1           = REEDUC_1,
+            educ2           = REEDUC_2,
+            preg_trabajar   = P69ST.A,
+            wt) %>% 
   mutate(countrycode = case_when(nchar(countrycode)==2 ~ str_c('0', countrycode),
                                  T ~ countrycode)) %>% 
   left_join(aux2, by='countrycode') %>% 
@@ -64,26 +83,16 @@ df_latin_2009 <- latin_2009 %>%
   transmute(countrycode     = as.character(idenpa), 
             region          = as.factor(reg),
             ciudad          = as.factor(ciudad), 
-            tamciud         = as.factor(tamciud), 
-            wt, reedad, sexo,
+            tamciud         = as.factor(tamciud),
             educ1           = reeduc1,
             educ2           = reeduc2,
             educ3           = reeduc3,
             preg_hogar      = p67st_c,
-            preg_politicos  = p67wvs_d) %>% 
+            preg_politicos  = p67wvs_d,
+            wt, reedad) %>% 
   mutate(countrycode = case_when(nchar(countrycode)==2 ~ str_c('0', countrycode),
                                  T ~ countrycode)) %>% 
   left_join(aux2, by='countrycode') %>% 
   mutate(countrycode = as.factor(countrycode))
 
-# Modelos Paper 
-# Tabla 3
-col1 <- lm(flfp2000 ~ plow + agricultural_suitability + large_animals + tropical_climate + political_hierarchies + economic_complexity +ln_income + ln_income_squared, data = cross_country)
-
-# Tabla 4
-colu2 <- lm(jobs_scarce ~ plow + ln_income + ln_income2 + economic_complexity + large_animals + political_hierarchies + tropical_climate + agricultural_suitability + primary + secondary  + age + age_sq + married + sex + continent, data = df_wvs)
-
-# Regresion con los datos del latinobarometro, prueb
-
-
-rm(aux, aux2, col1, colu2)
+rm(aux, aux2, col1, colu2, latin_2009, latin_2015, latin_2017)
