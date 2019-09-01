@@ -1,8 +1,19 @@
 library(tidyverse)
 library(janitor)
+library(here)
+library(haven)
 
-# Carga Base 2017
-latin_2017 <- readRDS("C:/Users/Usuario/Desktop/Latinobarometro/proyecto/data/internas/latin_2017.rds")
+# Carga codiguera ISO
+iso <- read_csv("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv") %>%
+  transmute(pais         = name,
+            iso3         = `alpha-3`,
+            countrycode = `country-code`)
+saveRDS(iso, "data/internas/iso.rds")
+
+
+# Carga Base Latinobarometro 2017
+latin_2017 <- readRDS("mateo/data/internas/latin_2017.rds") 
+
 
 # Tabla Idioma
 tabyl(latin_2017$S24.A)
@@ -12,7 +23,6 @@ tabyl(latin_2017$S9)
 
 # Tabla Raza
 tabyl(latin_2017$S10)
-
 
 # Que la mitad de los miembros del parlamento tengan que ser mujeres
 tabla1 <- latin_2017 %>%  

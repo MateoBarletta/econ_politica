@@ -6,19 +6,19 @@ library(sandwich)
 library(lmtest)
 
 # Carga codiguera ISO
-iso <- readRDS("data/internas/iso.rds")
+iso <- readRDS("mateo/data/internas/iso.rds")
 
 # Carga Base Latinobarometro 2017
-latin_2017 <- readRDS("data/internas/latin_2017.rds") 
+latin_2017 <- readRDS("mateo/data/internas/latin_2017.rds") 
 
 # Carga Base Latinobarometro 2015
-latin_2015 <- readRDS("data/internas/latin_2015.rds") 
+latin_2015 <- readRDS("mateo/data/internas/latin_2015.rds") 
 
 # Carga Base Latinobarometro 2009
-latin_2009 <- readRDS("data/internas/latin_2009.rds") 
+latin_2009 <- readRDS("mateo/data/internas/latin_2009.rds") 
 
 # Carga WVS
-df_wvs <- read_dta("data/externas/WVS_dataset.dta") %>% 
+df_wvs <- read_dta("mateo/data/externas/WVS_dataset.dta") %>% 
   mutate(sex         = as.factor(sex),
          regioncode  = as.factor(regioncode),
          continent   = as.factor(continent),
@@ -28,7 +28,7 @@ df_wvs <- read_dta("data/externas/WVS_dataset.dta") %>%
          secondary   = as.factor(secondary))
 
 # Carga cross country dataset
-cross_country <- read_dta("data/externas/crosscountry_dataset.dta")
+cross_country <- read_dta("mateo/data/externas/crosscountry_dataset.dta")
 
 # Genero df auxiliares para joinear al latinobarometro
 aux <- df_wvs %>% 
