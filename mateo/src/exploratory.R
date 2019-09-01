@@ -8,7 +8,7 @@ iso <- read_csv("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with
   transmute(pais         = name,
             iso3         = `alpha-3`,
             countrycode = `country-code`)
-saveRDS(iso, "data/internas/iso.rds")
+saveRDS(iso, "mateo/data/internas/iso.rds")
 
 
 # Carga Base Latinobarometro 2017

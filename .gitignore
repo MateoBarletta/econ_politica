@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+/data*
 plough_replication/*
 .DS_Store
 paula/data/*.dta
+
