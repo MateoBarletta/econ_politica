@@ -26,16 +26,16 @@ estimates store t1_d
 /*  Esto est‡ bueno para introducir mi trabajo y la hip—tesis central, el uso de arado est‡ asociado a una menor participaci—n femenina 
 en el empleo relativo al agro. Igual no es significativo. */
 
-xi: reg  fertility plow agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity, r
+xi: reg  fertility plow agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity  lfpf, r
 estimates store t1_e
 
-xi: reg  fertility plow agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity i.continent, r
+xi: reg  fertility plow agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity i.continent  lfpf, r
 estimates store t1_f
 
 /* Como en el paper "Fertility and the Plough (2011)", el efecto del uso de arado en coeficiente asociado a la fertilidad es negativo
  y significativo. Esta ser’a la primera 'otra' dimensi—n que yo utilizar’a. */
 
-esttab t1_a t1_b t1_c t1_d t1_e t1_f using output/tabla1.tex, b(%10.3f) se mtitles 
+esttab t1_a t1_b t1_c t1_d t1_e t1_f using output/tabla1.tex, b(%10.3f) se mtitles replace
 
 ****************************************************************************************************
 ************************************ Tabla V: versi—n Paula ****************************************
@@ -70,7 +70,7 @@ estimates store t2_g
 xi: reg confidence_women_org plow ln_income ln_income2 economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary  age age_sq married i.sex i.continent, cl(regioncode)
 estimates store t2_h
 
-esttab t2_a t2_b t2_c t2_d t2_e t2_f t2_g t2_h using output/tabla2.tex, b(%10.3f) se mtitles 
+esttab t2_a t2_b t2_c t2_d t2_e t2_f t2_g t2_h using output/tabla2.tex, b(%10.3f) se mtitles replace
 
 ****************************************************************************************************
 *********************************** Tabla VIII: versi—n Paula **************************************
@@ -100,14 +100,14 @@ reg  plow plow_positive_crops  plow_negative_crops agricultural_suitability trop
 test plow_negative_crops=plow_positive_crops
 predict resid, resid
 
-reg fertility plow resid agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared, r 
+reg fertility plow resid agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared  lfpf, r 
 drop resid 
 
-xi: reg  plow plow_positive_crops plow_negative_crops agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent if fertility~=., r 
+xi: reg  plow plow_positive_crops plow_negative_crops agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent lfpf if fertility~=., r 
 test plow_negative_crops=plow_positive_crops
 predict resid, resid
 
-xi: reg fertility plow resid agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent , r 
+xi: reg fertility plow resid agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent lfpf, r 
 drop resid 
 
 reg plow plow_positive_crops plow_negative_crops agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared if schooling_gpi~=., r 
@@ -136,11 +136,11 @@ xi: reg lfpf plow_negative_crops plow_positive_crops  agricultural_suitability t
 test plow_negative_crops plow_positive_crops
 test plow_negative_crops=plow_positive_crops
 
-xi: reg fertility plow_negative_crops plow_positive_crops  agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared, r 
+xi: reg fertility plow_negative_crops plow_positive_crops  agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared  lfpf, r 
 test plow_negative_crops plow_positive_crops
 test plow_negative_crops=plow_positive_crops
 
-xi: reg fertility plow_negative_crops plow_positive_crops  agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent, r 
+xi: reg fertility plow_negative_crops plow_positive_crops  agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared  lfpf i.continent, r 
 test plow_negative_crops plow_positive_crops
 test plow_negative_crops=plow_positive_crops
 
@@ -162,10 +162,10 @@ estimates store t3_a
 xi: ivreg2 lfpf (plow = plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent, r first
 estimates store t3_b
 
-xi: ivreg2 fertility (plow = plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared , r first
+xi: ivreg2 fertility (plow = plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared  lfpf, r first
 estimates store t3_c
 
-xi: ivreg2 fertility (plow = plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent, r first
+xi: ivreg2 fertility (plow = plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent  lfpf, r first
 estimates store t3_d
 
 xi: ivreg2 schooling_gpi (plow =  plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared , r first
@@ -174,4 +174,4 @@ estimates store t3_e
 xi: ivreg2 schooling_gpi (plow =  plow_negative_crops plow_positive_crops) agricultural_suitability tropical_climate large_animals political_hierarchies economic_complexity ln_income ln_income_squared i.continent, r first
 estimates store t3_f
 
-esttab t3_a t3_b t3_c t3_d t3_e t3_f using output/tabla3.tex, b(%10.3f) se mtitles 
+esttab t3_a t3_b t3_c t3_d t3_e t3_f using output/tabla3.tex, b(%10.3f) se mtitles replace
