@@ -189,6 +189,7 @@ df_latin_2009_region <- latin_2009 %>%
          mujer_hogar    = case_when(mujer_hogar == -2 ~ NA_real_, TRUE ~ mujer_hogar)) %>% 
   left_join(control_region, by='region')
 
+
 write_dta(df_latin_2017_pais, "mateo/data/internas/df_latin_2017_pais.dta")
 write_dta(df_latin_2017_region, "mateo/data/internas/df_latin_2017_region.dta")
 write_dta(df_latin_2015_pais, "mateo/data/internas/df_latin_2015_pais.dta")
@@ -197,3 +198,4 @@ write_dta(df_latin_2009_pais, "mateo/data/internas/df_latin_2009_pais.dta")
 write_dta(df_latin_2009_region, "mateo/data/internas/df_latin_2009_region.dta")
 
 rm(latin_2009, latin_2015, latin_2017)
+
