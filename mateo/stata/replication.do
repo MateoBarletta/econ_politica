@@ -22,19 +22,21 @@ use "WVS_dataset.dta", clear
 keep if continent == "South America"
 
 xi: reg FLFP15_64			plow ln_income ln_income2 economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary age age_sq married i.continent if age>=15 & age<=64, cl(regioncode)
-estimates store columna1
+estimates store col1
 xi: reg jobs_scarce	   		plow ln_income ln_income2 economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary  age age_sq married i.sex i.continent, cl(regioncode)
-estimates store columna2
+estimates store col2
 xi: reg men_pol_leaders		plow ln_income ln_income2 economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary  age age_sq married i.sex i.continent, cl(regioncode)
-estimates store columna3
+estimates store col3
 
 xi: reg FLFP15_64 			plow economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary  age age_sq married i.countrycode if age>=15 & age<=64 , cl(regioncode)
-estimates store columna5
+estimates store col5
 xi: reg jobs_scarce	  		plow economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary  age age_sq married i.sex	 	i.countrycode, cl(regioncode)
-estimates store columna6
+estimates store col6
 xi: reg men_pol_leaders		plow economic_complexity large_animals political_hierarchies tropical_climate agricultural_suitability primary secondary  age age_sq married i.sex		i.countrycode , cl(regioncode)
-estimates store columna7
+estimates store col7
 
 *Tabla 4 LaTeX
-esttab columna1 columna2 columna3 columna5 columna6 columna7 using tabla4.tex, wide replace ///
-    title(Tabla 4: Estimacion MCO a nivel individual\label{tab4})
+cd "C:\Users\Usuario\Desktop\Trabajo Final\proyecto\econ_politica\mateo\data"
+
+esttab col1 col2 col3 col5 col6 col7 using internas/tabla44.tex, b(%10.3f) se mtitles replace ///
+    title(Estimaciones MCO a nivel individual - Base original subset América Latina\label{tab1})
