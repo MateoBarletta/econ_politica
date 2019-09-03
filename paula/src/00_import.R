@@ -33,7 +33,7 @@ clean_structure_wdi <- function(df) {
     janitor::clean_names()
 }
 
-# Keywords BM para sacar dtaos
+# Keywords BM para sacar datos
 
 keywords <- ind_search(pattern = "female")
 
@@ -73,7 +73,7 @@ fertility <- ai(indicator = "SP.DYN.TFRT.IN", country = paises_paper, startdate 
 maternal_mortality <- ai(indicator = "SH.STA.MMRT", country = paises_paper, startdate = 2014, enddate = 2014) %>% 
   clean_structure_wdi()
 
-schooling <- ai(indicator = "PRJ.MYS.25UP.GPI", country = paises_paper, startdate = 2014, enddate = 2014) %>% 
+schooling <- ai(indicator = "SE.ENR.PRSC.FM.ZS", country = paises_paper, startdate = 2014, enddate = 2014) %>% 
   clean_structure_wdi()
 
 df_wdi <- labor_force %>% 
@@ -190,7 +190,8 @@ df_nathan <- haven::read_dta("plough_replication/crosscountry_dataset.dta") %>%
   rename(lfpf = labor_force_female_percent_of_total_labor_force,
          employment_agriculture = employment_in_agriculture_female_percent_of_female_employment,
          fertility = fertility_rate_total_births_per_woman,
-         maternal_mortality = maternal_mortality_ratio_modeled_estimate_per_100_000_live_births)
+         maternal_mortality = maternal_mortality_ratio_modeled_estimate_per_100_000_live_births,
+         schooling_gpi = school_enrollment_primary_and_secondary_gross_gender_parity_index_gpi)
 
 readr::write_rds(df_nathan, 'paula/data/nathan_augmentented.rds') 
 haven::write_dta(df_nathan, 'paula/data/nathan_augmentented.dta', version = 13)
